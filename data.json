@@ -13,11 +13,11 @@
     },
     "RIOT": {
         "name": "Riot Blockchain",
-        "total": 65
+        "total": 75
     },
     "AMD": {
         "name": "AMD",
-        "total": 25
+        "total": 15
     },
     "SQ": {
         "name": "Square",
@@ -25,11 +25,11 @@
     },
     "SPY": {
         "name": "S&P 500 ETF Trust",
-        "total": 1
+        "total": 2
     },
     "ARKK": {
         "name": "ARK Innovation ETF",
-        "total": 4
+        "total": 5
     },
     "ADT": {
         "name": "ADT",

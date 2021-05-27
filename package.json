@@ -13,7 +13,8 @@
     "coingecko-api": "^1.0.10",
     "csv-parse": "^4.15.4",
     "express": "^4.17.1",
-    "yahoo-finance": "^0.3.7"
+    "yahoo-finance": "^0.3.7",
+    "yahoo-stock-prices": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "^7.27.0"
