@@ -13,6 +13,7 @@ const nomics_key = JSON.parse(apirawdata)['nomics'];
 let rawdata = fs.readFileSync('data.json');
 let holdings_data = JSON.parse(rawdata);
 // console.log(holdings_data)
+let ETF_TICKERS = ["SPY", "ARKK"]
 
 app.get('/portfolio', async (req, res) => {
   let response = await getPortfolio();
@@ -36,6 +37,7 @@ const getPortfolio = async () => {
   let networth = 0;
   let stocks_value = 0;
   let crypto_value = 0;
+  let etf_value = 0;
   // console.log("\nStocks")
   // console.log("========================")
   for (const [ticker, stock] of Object.entries(holdings_data)) {
@@ -46,9 +48,13 @@ const getPortfolio = async () => {
     let price = quote['price']['regularMarketPrice'];
     let value = parseFloat((price * holdings_data[ticker].total).toFixed(2));
     holdings_data[ticker].value = value;
-    //console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
+    console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
     networth += value;
     stocks_value += value;
+
+    if (isETF(ticker)) {
+      etf_value += value;
+    }
   } 
   stocks_value = parseFloat(stocks_value.toFixed(2))
   
@@ -80,13 +86,18 @@ const getPortfolio = async () => {
     "timestamp": new Date().getTime(),
     "networth": networth,
     "stocks_portfolio": stocks_value,
-    "cryptocurrencies": crypto_value
+    "cryptocurrencies": crypto_value,
+    "etf": etf_value
   }
-  // console.log(response);
+  console.log(response);
   console.log('response sent!');
   let end = new Date().getTime();
-  console.log(`${(end - start) / 1000} seconds.`);
+  console.log(`${(end - start) / 1000} seconds.\n`);
   return response;
+}
+
+const isETF = (ticker) => {
+  return ETF_TICKERS.includes(ticker);
 }
 
 app.listen(port, () => {
