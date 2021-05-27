@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
 });
 
 const getPortfolio = async () => {
+  let start = new Date().getTime();
   const coin_namemap = {
     'bitcoin': 'BTC',
     'ethereum': 'ETH',
@@ -45,7 +46,7 @@ const getPortfolio = async () => {
     let price = quote['price']['regularMarketPrice'];
     let value = parseFloat((price * holdings_data[ticker].total).toFixed(2));
     holdings_data[ticker].value = value;
-    console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
+    //console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
     networth += value;
     stocks_value += value;
   } 
@@ -81,7 +82,10 @@ const getPortfolio = async () => {
     "stocks_portfolio": stocks_value,
     "cryptocurrencies": crypto_value
   }
-  console.log(response);
+  // console.log(response);
+  console.log('response sent!');
+  let end = new Date().getTime();
+  console.log(`${(end - start) / 1000} seconds.`);
   return response;
 }
 
