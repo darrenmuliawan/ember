@@ -1,7 +1,7 @@
 {
     "ETH": {
         "name": "Ether",
-        "total": 2
+        "total": 2.09523288
     },
     "ADA": {
         "name": "Cardano",
@@ -9,7 +9,7 @@
     },
     "BTC": {
         "name": "Bitcoin",
-        "total": 0.03364229
+        "total": 0.04095666
     },
     "RIOT": {
         "name": "Riot Blockchain",

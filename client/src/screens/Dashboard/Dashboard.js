@@ -20,25 +20,25 @@ const DashboardPage = (props) => {
 		// REDUCER STATE
 		loadingPortfolio,
 		portfolio,
-
+		
 		// DISPATCH ACTION
 		getPortfolio
 	} = props;
-
+	
 	useEffect(() => {
 		getPortfolio();
 	}, []);
-
+	
 	const _getUnit = (ticker) => {
 		const crypto_tickers = ["BTC", "ETH", "ADA"];
-
+		
 		if (crypto_tickers.includes(ticker)) {
 			return ticker;
 		}
-
+		
 		return "";
 	}
-
+	
 	const _getIcon = (ticker) => {
 		if (ticker === "BTC") {
 			return <img src={bitcoin} className="crypto-icon"/>;
@@ -49,39 +49,40 @@ const DashboardPage = (props) => {
 		}
 		return null;
 	}
-
-    return (
-        <div className="container center-h">
-            <Header />
-            <div className="inner-container inner-container-header">
-                <div className="section">
-                    <div className="side-by-side-container center-v">
-                        <div className="">
-                            <p>Portfolio</p>
-                        </div>
-                        <div className="right">
+	
+	return (
+		<div className="center-h">
+			<Header />
+			<div className="container">
+			<div className="inner-container inner-container-header">
+				<div className="section">
+					<div className="side-by-side-container center-v">
+						<div className="">
+							<p>Portfolio</p>
+						</div>
+						<div className="right">
 							<p className="small-text secondary-text">retrieved at {moment(portfolio.timestamp).format('hh:mm A')}</p>
-                        </div>
-                    </div>
-                    <div className="side-by-side-container border">
-                        <div className="section">
-                            <p>{formatter.format(portfolio.networth)}</p>
-                        </div>
-                        <div className="section">
-
-                        </div>
-                    </div>
-                </div>
-                <div className="section">
-                    <div className="side-by-side-container">
-                        <div className="">
-                            <p>Assets</p>
-                        </div>
-                        <div className="right">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div className="border">
+						</div>
+					</div>
+					<div className="side-by-side-container border">
+						<div className="section">
+							<p>{formatter.format(portfolio.networth)}</p>
+						</div>
+						<div className="section">
+						
+						</div>
+					</div>
+				</div>
+				<div className="section">
+					<div className="side-by-side-container">
+						<div className="">
+							<p>Assets</p>
+						</div>
+						<div className="right">
+							<p></p>
+						</div>
+					</div>
+					<div className="border">
 						<div>
 							<div className="section space-between">
 								<div>
@@ -128,26 +129,27 @@ const DashboardPage = (props) => {
 							</div>
 							)
 						}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-const mapStateToProps = (state) => {
-	return {...state.portfolio}
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		getPortfolio: () => {
-			dispatch(getPortfolio())
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		)
+	}
+	
+	const mapStateToProps = (state) => {
+		return {...state.portfolio}
+	}
+	
+	const mapDispatchToProps = (dispatch) => {
+		return {
+			getPortfolio: () => {
+				dispatch(getPortfolio())
+			}
 		}
 	}
-}
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-) (DashboardPage);
+	
+	export default connect(
+		mapStateToProps,
+		mapDispatchToProps
+		) (DashboardPage);
