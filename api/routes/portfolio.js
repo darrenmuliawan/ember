@@ -34,6 +34,7 @@ const getPortfolio = async () => {
     let value = parseFloat((price * holdings_data[ticker].total).toFixed(2));
     holdings_data[ticker].value = value;
     holdings_data[ticker].price = price;
+    holdings_data[ticker].ticker = ticker;
     // console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
     networth += value;
     stocks_value += value;

@@ -8,6 +8,12 @@ import { getPortfolio } from '../../redux/Portfolio/portfolioAction';
 import ethereum from '../../img/ethereum.svg';
 import bitcoin from '../../img/bitcoin.svg';
 import cardano from '../../img/cardano.svg';
+import moment from 'moment';
+
+let formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD'
+})
 
 const DashboardPage = (props) => {
 	const {
@@ -49,17 +55,17 @@ const DashboardPage = (props) => {
             <Header />
             <div className="inner-container inner-container-header">
                 <div className="section">
-                    <div className="side-by-side-container">
+                    <div className="side-by-side-container center-v">
                         <div className="">
                             <p>Portfolio</p>
                         </div>
                         <div className="right">
-
+							<p className="small-text secondary-text">retrieved at {moment(portfolio.timestamp).format('hh:mm A')}</p>
                         </div>
                     </div>
                     <div className="side-by-side-container border">
                         <div className="section">
-                            <p>${portfolio.networth}</p>
+                            <p>{formatter.format(portfolio.networth)}</p>
                         </div>
                         <div className="section">
 
@@ -104,10 +110,10 @@ const DashboardPage = (props) => {
 									</div>
 									<div className="horizontal">
 										<p className="large-text" style={{marginRight: '10px'}}>{asset.total} {_getUnit(asset.ticker)}</p>
-										<p className="medium-text secondary-text">≈ ${asset.value}</p>
+										<p className="medium-text secondary-text">≈ {formatter.format(asset.value)}</p>
 									</div>
 									<div>
-										<p className="large-text">${asset.price}</p>
+										<p className="large-text">{formatter.format(asset.price)}</p>
 									</div>
 								</div>
 								<div className="right">
