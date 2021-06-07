@@ -1,4 +1,4 @@
 ./node_modules/
 
-./api.json
+./api/api.json
 node_modules

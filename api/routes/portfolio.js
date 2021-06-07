@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const holdings_data = require('./data.json');
+const holdings_data = require('../data.json');
 const apirawdata = require('../api.json');
 const nomics_key = apirawdata['nomics'];
 const yahooFinance = require('yahoo-finance');
