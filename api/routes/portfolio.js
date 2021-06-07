@@ -1,37 +1,19 @@
-const express = require('express')
-const CoinGecko = require('coingecko-api');
-const parse = require('csv-parse');
-const fs = require('fs');
+var express = require('express');
+var router = express.Router();
+const holdings_data = require('./data.json');
+const apirawdata = require('../api.json');
+const nomics_key = apirawdata['nomics'];
 const yahooFinance = require('yahoo-finance');
-const { default: axios } = require('axios');
-const app = express();
-const port = 8001;
-const apirawdata = fs.readFileSync('api.json');
-const nomics_key = JSON.parse(apirawdata)['nomics'];
+const ETF_TICKERS = ["SPY", "ARKK"];
+const axios = require('axios');
 
-// Read holdings from JSON file
-let rawdata = fs.readFileSync('data.json');
-let holdings_data = JSON.parse(rawdata);
-// console.log(holdings_data)
-let ETF_TICKERS = ["SPY", "ARKK"]
-
-app.get('/holdings', async (req, res) => {
-  let response = holdings_data;
-  res.send(response);
-});
-
-app.get('/portfolio', async (req, res) => {
+/* GET portfolio values. */
+router.get('/', async function(req, res, next) {
   let response = await getPortfolio();
   res.send(response);
-})
-
-app.get('/', (req, res) => {
-  console.log(req.headers)
-  res.send('Hello World!')
 });
 
 const getPortfolio = async () => {
-  let start = new Date().getTime();
   const coin_namemap = {
     'bitcoin': 'BTC',
     'ethereum': 'ETH',
@@ -43,8 +25,6 @@ const getPortfolio = async () => {
   let stocks_value = 0;
   let crypto_value = 0;
   let etf_value = 0;
-  // console.log("\nStocks")
-  // console.log("========================")
   for (const [ticker, stock] of Object.entries(holdings_data)) {
     if (Object.values(coin_namemap).includes(ticker)) {
       continue;
@@ -53,7 +33,8 @@ const getPortfolio = async () => {
     let price = quote['price']['regularMarketPrice'];
     let value = parseFloat((price * holdings_data[ticker].total).toFixed(2));
     holdings_data[ticker].value = value;
-    console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
+    holdings_data[ticker].price = price;
+    // console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${price}\n`);
     networth += value;
     stocks_value += value;
 
@@ -70,9 +51,11 @@ const getPortfolio = async () => {
   axios_data = axios_res.data;
   for (let i = 0; i < axios_data.length; i++) {
     let ticker = axios_data[i].id;
-    let price = axios_data[i].price;
+    let price = parseFloat(axios_data[i].price).toFixed(2);
     let value = parseFloat((price * holdings_data[ticker].total).toFixed(2));
     holdings_data[ticker].value = value;
+    holdings_data[ticker].ticker = ticker;
+    holdings_data[ticker].price = price;
     // console.log(`- ${ticker}: $${value}\n${holdings_data[ticker].total} x $${parseFloat(price).toFixed(2)}\n`);
     networth += value;
     crypto_value += value;
@@ -94,10 +77,7 @@ const getPortfolio = async () => {
     "cryptocurrencies": crypto_value,
     "etf": etf_value
   }
-  console.log(response);
-  console.log('response sent!');
-  let end = new Date().getTime();
-  console.log(`${(end - start) / 1000} seconds.\n`);
+  // console.log(response);
   return response;
 }
 
@@ -105,9 +85,4 @@ const isETF = (ticker) => {
   return ETF_TICKERS.includes(ticker);
 }
 
-app.listen(port, () => {
-  console.log(`Starting...`)
-  
-  // getPortfolio();
-  // setInterval(getPortfolio, 10000);
-});
+module.exports = router;
