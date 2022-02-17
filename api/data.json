@@ -1,27 +1,27 @@
 {
     "ETH": {
         "name": "Ether",
-        "total": 2.09523288
+        "total": 0.7
     },
     "ADA": {
         "name": "Cardano",
-        "total": 1006.087
+        "total": 0
     },
     "BTC": {
         "name": "Bitcoin",
-        "total": 0.04095666
+        "total": 0.38831391
+    },
+    "STX": {
+        "name": "Stacks",
+        "total": 750
     },
     "RIOT": {
         "name": "Riot Blockchain",
-        "total": 80
-    },
-    "AMD": {
-        "name": "AMD",
-        "total": 15
+        "total": 0
     },
     "SQ": {
         "name": "Square",
-        "total": 6
+        "total": 0
     },
     "SPY": {
         "name": "S&P 500 ETF Trust",
@@ -29,7 +29,7 @@
     },
     "ARKK": {
         "name": "ARK Innovation ETF",
-        "total": 4
+        "total": 0
     },
     "ADT": {
         "name": "ADT",

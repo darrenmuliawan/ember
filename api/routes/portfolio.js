@@ -18,6 +18,7 @@ const getPortfolio = async () => {
     'bitcoin': 'BTC',
     'ethereum': 'ETH',
     'cardano': 'ADA',
+    'stacks': 'STX'
   }
   
   // Print
@@ -25,6 +26,8 @@ const getPortfolio = async () => {
   let stocks_value = 0;
   let crypto_value = 0;
   let etf_value = 0;
+
+  // Get stocks data
   for (const [ticker, stock] of Object.entries(holdings_data)) {
     if (Object.values(coin_namemap).includes(ticker)) {
       continue;
@@ -48,8 +51,9 @@ const getPortfolio = async () => {
   // Retrieve crypto prices
   // console.log("\nCryptocurrencies")
   // console.log("========================")
-  axios_res = await axios.get(`https://api.nomics.com/v1/currencies/ticker?key=${nomics_key}`, { params: { ids:"BTC,ETH,ADA" } });
+  axios_res = await axios.get(`https://api.nomics.com/v1/currencies/ticker?key=${nomics_key}`, { params: { ids:"BTC,ETH,ADA,STX" } });
   axios_data = axios_res.data;
+  console.log(axios_data)
   for (let i = 0; i < axios_data.length; i++) {
     let ticker = axios_data[i].id;
     let price = parseFloat(axios_data[i].price).toFixed(2);

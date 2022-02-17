@@ -9,7 +9,7 @@ export function* portfolioSagas() {
 function* _getPortfolio() {
   try {
     console.log('Getting portfolio value...');
-    let res = yield call(axios.get, "http://10.0.0.72:9000/portfolio");
+    let res = yield call(axios.get, "http://localhost:9000/portfolio");
 
     if (res) {
       console.log(res);
